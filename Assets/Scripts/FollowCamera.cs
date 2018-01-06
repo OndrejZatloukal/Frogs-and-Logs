@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour {
+public class FollowCamera : MonoBehaviour
+{
 
-    [SerializeField]
-    private Transform player;
-    [SerializeField]
-    private Vector3 offset;
+    [SerializeField] private Transform player;
+    [SerializeField] private Vector3 offset;
     private float cameraFollowSpeed = 5f;
 	
 	// Update is called once per frame
-	void Update () {
+	void Update()
+    {
         Vector3 newPosition = player.position + offset;
 
+        SetupCameraPosition(newPosition);
+    }
+
+    private void SetupCameraPosition(Vector3 newPosition)
+    {
         transform.position = Vector3.Lerp(transform.position, newPosition, cameraFollowSpeed * Time.deltaTime);
-	}
+    }
 }

@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BirdMovement : MonoBehaviour {
+public class BirdMovement : MonoBehaviour
+{
+    [SerializeField] private Transform target;
+    [SerializeField] private RandomSoundPlayer birdFootsteps;
 
-    [SerializeField]
-    private Transform target;
     private NavMeshAgent birdAgent;
     private Animator birdAnimator;
-    [SerializeField]
-    private RandomSoundPlayer birdFootsteps;
+
 
 	// Use this for initialization
-	void Start () {
+	void Start()
+    {
         birdAgent = GetComponent<NavMeshAgent>();
         birdAnimator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update()
+    {
         // Set the bird's destination.
         birdAgent.SetDestination(target.position);
 
@@ -29,6 +31,11 @@ public class BirdMovement : MonoBehaviour {
         // Pass the velocity to the animator component.
         birdAnimator.SetFloat("Speed", speed);
 
+        CheckIfBirdIsMoving(speed);
+    }
+
+    private void CheckIfBirdIsMoving(float speed)
+    {
         if (speed > 0f)
         {
             birdFootsteps.enabled = true;
@@ -37,5 +44,5 @@ public class BirdMovement : MonoBehaviour {
         {
             birdFootsteps.enabled = false;
         }
-	}
+    }
 }

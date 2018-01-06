@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-
     public bool alive;
-    [SerializeField]
-    private GameObject pickupPrefab;
+
+    [SerializeField] private GameObject pickupPrefab;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
         alive = true;
 	}
@@ -22,7 +21,12 @@ public class PlayerHealth : MonoBehaviour
             alive = false;
 
             // Create the pickup particles.
-            Instantiate(pickupPrefab, transform.position, Quaternion.identity);
+            CreateDeathEffect();
         }
-	}
+    }
+
+    private void CreateDeathEffect()
+    {
+        Instantiate(pickupPrefab, transform.position, Quaternion.identity);
+    }
 }

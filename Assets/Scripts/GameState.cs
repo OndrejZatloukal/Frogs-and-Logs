@@ -6,18 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
-
     private bool gameStarted = false;
-    [SerializeField]
-    private Text gameStateText;
-    [SerializeField]
-    private GameObject player;
-    [SerializeField]
-    private BirdMovement birdMovement;
-    [SerializeField]
-    private FollowCamera followCamera;
+
+    [SerializeField] private Text gameStateText;
+    [SerializeField] private GameObject player;
+    [SerializeField] private BirdMovement birdMovement;
+    [SerializeField] private FollowCamera followCamera;
+
     private float restartDelay = 3f;
     private float restartTimer;
+
     private PlayerMovement playerMovement;
     private PlayerHealth playerHealth;
 
@@ -41,32 +39,46 @@ public class GameState : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
         // If the game is not started and the player presses the space bar...
-		if (gameStarted == false && Input.GetKeyUp(KeyCode.Space))
-        {
-            // ...start the game.
-            StartGame();
-        }
+        RespondToInitialInput();
 
         // If the payer is no longer alive...
+        CheckIfPlayerIsAlive();
+    }
+
+    private void CheckIfPlayerIsAlive()
+    {
         if (playerHealth.alive == false)
         {
             // ...then end the game...
             EndGame();
-
-            // ...increment a timer to count up to restarting...
-            restartTimer = restartTimer + Time.deltaTime;
-
-            // ...and if it reaches the restart delay...
-            if (restartTimer >= restartDelay)
-            {
-                // ...then reaload the currently loaded scene.
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
+            ReloadGame();
         }
-	}
+    }
+
+    private void ReloadGame()
+    {
+        // ...increment a timer to count up to restarting...
+        restartTimer = restartTimer + Time.deltaTime;
+
+        // ...and if it reaches the restart delay...
+        if (restartTimer >= restartDelay)
+        {
+            // ...then reaload the currently loaded scene.
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    private void RespondToInitialInput()
+    {
+        if (gameStarted == false && Input.GetKeyUp(KeyCode.Space))
+        {
+            // ...start the game.
+            StartGame();
+        }
+    }
 
     private void StartGame()
     {

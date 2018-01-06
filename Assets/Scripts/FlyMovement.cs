@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class FlyMovement : MonoBehaviour
 {
-
-    [SerializeField]
-    private Transform center;
+    [SerializeField] private Transform center;
     private float flySpeed;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
+    {
+        SetFlySpeed();
+    }
+
+    private void SetFlySpeed()
     {
         flySpeed = Random.Range(300f, 700f);
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        RotateFlyAroundObject();
+    }
+
+    private void RotateFlyAroundObject()
     {
         transform.RotateAround(center.position, Vector3.up, flySpeed * Time.deltaTime);
-	}
+    }
 }

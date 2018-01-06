@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class RandomSoundPlayer : MonoBehaviour
 {
-
     private AudioSource audioSource;
-    [SerializeField]
-    private List<AudioClip> soundClips = new List<AudioClip>();
-    [SerializeField]
-    private float soundTimerDelay = 3f;
+
+    [SerializeField] private List<AudioClip> soundClips = new List<AudioClip>();
+    [SerializeField] private float soundTimerDelay = 3f;
+
     private float soundTimer;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
         audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
         // Increment a timer to count up to restarting.
+        RandomFootstepSound();
+    }
+
+    private void RandomFootstepSound()
+    {
         soundTimer = soundTimer + Time.deltaTime;
 
         // If the timer reaches the delay...
@@ -36,5 +40,5 @@ public class RandomSoundPlayer : MonoBehaviour
             // ...and play the sound.
             audioSource.PlayOneShot(randomSound);
         }
-	}
+    }
 }
